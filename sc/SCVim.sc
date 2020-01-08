@@ -53,17 +53,19 @@ SCVim {
 
 			// search two folders deep below ~/.vim for a folder named "*scvim*"
 			if(basePath.isNil) {
-				PathName("~/.vim".standardizePath).folders.do{ |folder|
-					if(folder.fullPath.contains("scvim")) {
-						basePath = folder.fullPath;
-					} {
-						folder.folders.do{ |subfolder|
-							if(subfolder.fullPath.contains("scvim")) {
-								basePath = subfolder.fullPath;
+				["~/.vim", "~/.local/share/nvim"].do{ |vimpath|
+					PathName(vimpath.standardizePath).folders.do{ |folder|
+						if(folder.fullPath.contains("scvim")) {
+							basePath = folder.fullPath;
+						} {
+							folder.folders.do{ |subfolder|
+								if(subfolder.fullPath.contains("scvim")) {
+									basePath = subfolder.fullPath;
+								}
 							}
-						}
+						};
 					};
-				};
+				}
 			};
 
 			if(basePath.isNil) {
