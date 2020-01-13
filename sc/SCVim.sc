@@ -231,4 +231,12 @@ SCVim {
 		tagfile.close();
 		"finished generating tagsfile".postln;
 	}
+
+	*getSCLHelpFile { |subject|
+		var helpFile, uri, localPath;
+		helpFile = SCDoc.findHelpFile(subject);
+		uri = URI(helpFile);
+		localPath = uri.asLocalPath.drop(SCDoc.helpTargetDir.size+1).drop(-5).replace("\\","/");
+		^SCDoc.documents[localPath].fullPath;
+	}
 } // end class

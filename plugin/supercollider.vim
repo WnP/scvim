@@ -24,30 +24,31 @@ endif
 au FileType supercollider execute "set tags+=".s:sclangTagsFile
 
 "  matchit
-au Filetype supercollider let b:match_skip = 's:scComment\|scString\|scSymbol'
-au Filetype supercollider let b:match_words = '(:),[:],{:}'
+au Filetype supercollider,scdoc let b:match_skip = 's:scComment\|scString\|scSymbol'
+au Filetype supercollider,scdoc let b:match_words = '(:),[:],{:}'
 
 " key bindings
 
-au Filetype supercollider nnoremap <buffer> <F5> :call SClang_block()<CR>
-au Filetype supercollider inoremap <buffer> <F5> :call SClang_block()<CR>a
-au Filetype supercollider vnoremap <buffer> <F5> :call SClang_send()<CR>
+au Filetype supercollider,scdoc nnoremap <buffer> <F5> :call SClang_block()<CR>
+au Filetype supercollider,scdoc inoremap <buffer> <F5> :call SClang_block()<CR>a
+au Filetype supercollider,scdoc vnoremap <buffer> <F5> :call SClang_send()<CR>
 
-au Filetype supercollider vnoremap <buffer> <F6> :call SClang_line()<CR>
-au Filetype supercollider nnoremap <buffer> <F6> :call SClang_line()<CR>
-au Filetype supercollider inoremap <buffer> <F6> :call SClang_line()<CR>a
+au Filetype supercollider,scdoc vnoremap <buffer> <F6> :call SClang_line()<CR>
+au Filetype supercollider,scdoc nnoremap <buffer> <F6> :call SClang_line()<CR>
+au Filetype supercollider,scdoc inoremap <buffer> <F6> :call SClang_line()<CR>a
 
-au Filetype supercollider nnoremap <buffer> <F12> :call SClangHardstop()<CR>
+au Filetype supercollider,scdoc nnoremap <buffer> <F12> :call SClangHardstop()<CR>
 
-au Filetype supercollider nnoremap <leader>sk :SClangRecompile<CR>
-au Filetype supercollider nnoremap <buffer>K :call SChelp(expand('<cword>'))<CR>
-au Filetype supercollider inoremap <C-Tab> :call SCfindArgs()<CR>a
-au Filetype supercollider nnoremap <C-Tab> :call SCfindArgs()<CR>
-au Filetype supercollider vnoremap <C-Tab> :call SCfindArgsFromSelection()<CR>
+au Filetype supercollider,scdoc nnoremap <leader>sk :SClangRecompile<CR>
+au Filetype supercollider,scdoc nnoremap <buffer>K :call SChelp(expand('<cword>'))<CR>
+au Filetype supercollider,scdoc nnoremap <buffer>H :call OpenSChelpFile(expand('<cword>'))<CR>
+au Filetype supercollider,scdoc inoremap <C-Tab> :call SCfindArgs()<CR>a
+au Filetype supercollider,scdoc nnoremap <C-Tab> :call SCfindArgs()<CR>
+au Filetype supercollider,scdoc vnoremap <C-Tab> :call SCfindArgsFromSelection()<CR>
 
 " DEPRECATED
-au Filetype supercollider nnoremap <leader>sd yiw :call SChelp(""")<CR>
-au Filetype supercollider nnoremap <leader>sj yiw :call SCdef(""")<CR>
-au Filetype supercollider nnoremap <leader>si yiw :call SCimplementation(""")<CR>
-au Filetype supercollider nnoremap <leader>sr yiw :call SCreference(""")<CR>
+au Filetype supercollider,scdoc nnoremap <leader>sd yiw :call SChelp(""")<CR>
+au Filetype supercollider,scdoc nnoremap <leader>sj yiw :call SCdef(""")<CR>
+au Filetype supercollider,scdoc nnoremap <leader>si yiw :call SCimplementation(""")<CR>
+au Filetype supercollider,scdoc nnoremap <leader>sr yiw :call SCreference(""")<CR>
 

@@ -319,6 +319,18 @@ function SChelp(subject)
   call SendToSCSilent('HelpBrowser.openHelpFor("' . a:subject . '");')
 endfun
 
+function OpenSChelpFile(subject)
+  let l:path = SendToSC('SCVim.getSCLHelpFile("' . a:subject . '");')
+  if l:path !~ "^ERROR: " && l:path != "Timeout" && l:path != "nil"
+    let l:current_filetype = &filetype
+    if l:current_filetype == "supercollider"
+      execute 'sview' l:path
+    else
+      execute 'e' l:path
+    endif
+  endif
+endfun
+
 function SCreference(subject)
   call SendToSCSilent('SCVim.methodReferences("' . a:subject . '");')
 endfun
@@ -400,5 +412,6 @@ com -nargs=0 SClangKill call SClangKill()
 com -nargs=0 SClangRecompile call SClangRecompile()
 com -nargs=0 SCtags call SCtags()
 com -nargs=0 SChelp call SChelp('')
+com -nargs=0 OpenSChelpFile call OpenSChelpFile('')
 
 " end supercollider.vim
