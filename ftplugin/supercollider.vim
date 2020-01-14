@@ -284,6 +284,8 @@ function SClangStart(...)
     call system(s:sclangTerm . " " . s:sclangServer . "&")
   endif
   let s:sclangStarted = 1
+  call system(s:sclangClient . " -retry ", '">>= SCVim started =<<".postln;')
+  call SCSendCurrentFile()
 endfunction
 
 function SClangKill()
@@ -308,6 +310,13 @@ endfunction
 function SClangHardstop()
   call SendToSCSilent('thisProcess.hardStop()')
 endfunction
+
+function SCSendCurrentFile()
+  if s:sclangStarted == 1
+    let l:filepath = expand('%:p')
+    call SendToSCSilent('SCVim.setCurrentPath("' . l:filepath . '");')
+  endif
+endfun
 
 " Introspection and Help Files
 
@@ -400,5 +409,8 @@ com -nargs=0 SClangKill call SClangKill()
 com -nargs=0 SClangRecompile call SClangRecompile()
 com -nargs=0 SCtags call SCtags()
 com -nargs=0 SChelp call SChelp('')
+com -nargs=0 SCSendCurrentFile call SCSendCurrentFile()
+
+autocmd BufEnter,BufNew *.sc,*.scd :SCSendCurrentFile
 
 " end supercollider.vim

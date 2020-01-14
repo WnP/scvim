@@ -23,8 +23,23 @@
 SCVim.generateTagsFile();
 */
 
+Document {
+	// needed for thisProcess.nowExecutingPath to work.. see Kernel::interpretCmdLine
+	var <path, <dataptr;
+	*new {|path, dataptr|
+		^super.newCopyArgs(path, dataptr);
+	}
+	*current {
+		var path = SCVim.getCurrentPath;
+		^Document(path, true);
+	}
+	*dir {
+		^SCVim.getCurrentPath
+	}
+}
+
 SCVim {
-	classvar nodes, <>vimPath;
+	classvar nodes, <>vimPath, <>currentPath;
 
 	*initClass {
 		nodes = List[];
@@ -231,4 +246,13 @@ SCVim {
 		tagfile.close();
 		"finished generating tagsfile".postln;
 	}
+
+	*setCurrentPath{ |path|
+		this.currentPath = path;
+	}
+
+	*getCurrentPath{
+		^this.currentPath;
+	}
+
 } // end class
